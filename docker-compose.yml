@@ -1,0 +1,25 @@
+version: "Compose specification"
+services:
+  accounts:
+    image: jblakd/accounts:latest
+    mem_limit: 700m
+    ports:
+      - "8080:8080"
+    networks:
+      - springcourse-network
+  loans:
+    image: jblakd/loans:latest
+    mem_limit: 700m
+    ports:
+      - "8090:8090"
+    networks:
+      - springcourse-network
+  cards:
+    image: jblakd/cards:latest
+    mem_limit: 700m
+    ports:
+      - "9000:9000"
+    networks:
+      - springcourse-network
+networks:
+  springcourse-network:
