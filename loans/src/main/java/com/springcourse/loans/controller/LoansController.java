@@ -17,11 +17,6 @@ import com.springcourse.loans.model.Customer;
 import com.springcourse.loans.model.Loans;
 import com.springcourse.loans.repository.LoansRepository;
 
-/**
- * @author Eazy Bytes
- *
- */
-
 @RestController
 public class LoansController {
 

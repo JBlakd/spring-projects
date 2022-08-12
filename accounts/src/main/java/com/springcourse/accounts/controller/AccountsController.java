@@ -15,11 +15,6 @@ import com.springcourse.accounts.model.Accounts;
 import com.springcourse.accounts.model.Customer;
 import com.springcourse.accounts.repository.AccountsRepository;
 
-/**
- * @author Eazy Bytes
- *
- */
-
 @RestController
 public class AccountsController {
 

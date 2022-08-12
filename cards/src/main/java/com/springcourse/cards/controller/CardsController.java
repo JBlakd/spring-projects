@@ -17,11 +17,6 @@ import com.springcourse.cards.model.Cards;
 import com.springcourse.cards.model.Customer;
 import com.springcourse.cards.repository.CardsRepository;
 
-/**
- * @author Eazy Bytes
- *
- */
-
 @RestController
 public class CardsController {
 
