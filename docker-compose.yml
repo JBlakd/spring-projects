@@ -7,8 +7,26 @@ services:
       - "8071:8071"
     networks:
       - springcourse-network
+  eurekaserver:
+    image: springcourse/eurekaserver:latest
+    mem_limit: 700m
+    ports:
+      - "8070:8070"
+    networks:
+      - springcourse-network
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 15s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
   accounts:
-    image: jblakd/accounts:latest
+    image: springcourse/accounts:latest
     mem_limit: 700m
     ports:
       - "8080:8080"
@@ -16,6 +34,7 @@ services:
       - springcourse-network
     depends_on:
       - configserver
+      - eurekaserver
     deploy:
       restart_policy:
         condition: on-failure
@@ -25,8 +44,9 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
   loans:
-    image: jblakd/loans:latest
+    image: springcourse/loans:latest
     mem_limit: 700m
     ports:
       - "8090:8090"
@@ -34,6 +54,7 @@ services:
       - springcourse-network
     depends_on:
       - configserver
+      - eurekaserver
     deploy:
       restart_policy:
         condition: on-failure
@@ -43,8 +64,9 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
   cards:
-    image: jblakd/cards:latest
+    image: springcourse/cards:latest
     mem_limit: 700m
     ports:
       - "9000:9000"
@@ -52,6 +74,7 @@ services:
       - springcourse-network
     depends_on:
       - configserver
+      - eurekaserver
     deploy:
       restart_policy:
         condition: on-failure
@@ -61,5 +84,6 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 networks:
   springcourse-network:
